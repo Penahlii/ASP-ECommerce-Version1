@@ -1,0 +1,77 @@
+﻿@model ProductListViewModel
+
+@if (Model.Products == null || Model.Products.Count == 0)
+{
+	<span class="alert alert-info">No Product Exist</span>
+}
+else
+{
+	<div class="container mt-4">
+		<div class="row">
+			<div class="col-md-6">
+				<div class="list-group">
+					<a href="/product/index?category=@Model.CurrentCategory&filterName=a-z&filterPrice=@Model.FilterByPrice" class="list-group-item list-group-item-action">
+						A-Z
+					</a>
+					<a href="/product/index?category=@Model.CurrentCategory&filterName=z-a&filterPrice=@Model.FilterByPrice" class="list-group-item list-group-item-action">
+						Z-A
+					</a>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="list-group">
+					<a href="/product/index?category=@Model.CurrentCategory&filterName=@Model.FilterByName&filterPrice=lower" class="list-group-item list-group-item-action">
+						First Lower
+					</a>
+					<a href="/product/index?category=@Model.CurrentCategory&filterName=@Model.FilterByName&filterPrice=higher" class="list-group-item list-group-item-action">
+						First Higher
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Product Name</th>
+				<th>Unit Price</th>
+				<th>UnitsInStock</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var item in Model.Products)
+			{
+				var style = "";
+				@if (item.UnitsInStock == 0)
+				{
+					style = "background-color:rgba(255,0,0,0.5);";
+				}
+				<tr style="@style">
+					<td>
+						@item.ProductName
+					</td>
+					<td>
+						@item.UnitPrice
+					</td>
+					<td>
+						@item.UnitsInStock
+					</td>
+					@if (style == "")
+					{
+						<td>
+							<a class="btn btn-xs btn-success"
+							   href="/Cart/AddToCart?productId=@item.ProductId&page=@Model.CurrentPage&category=@Model.CurrentCategory">Add To Cart</a>
+						</td>
+					}
+
+				</tr>
+			}
+		</tbody>
+	</table>
+	<product-list-pager current-category="@Model.CurrentCategory"
+						current-page="@Model.CurrentPage"
+						page-count="@Model.PageCount"
+						page-size="@Model.PageSize"></product-list-pager>
+}
