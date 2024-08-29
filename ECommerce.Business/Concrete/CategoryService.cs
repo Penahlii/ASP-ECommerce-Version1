@@ -18,7 +18,18 @@ namespace ECommerce.Business.Concrete
             _categoryDal = categoryDal;
         }
 
-        public async Task<List<Category>> GetAllAsync()
+		public async Task AddAsync(Category category)
+		{
+            await _categoryDal.Add(category);
+		}
+
+		public async Task DeleteAsync(int id)
+		{
+            var item = await _categoryDal.Get(c => c.CategoryId == id);
+            await _categoryDal.Delete(item);
+		}
+
+		public async Task<List<Category>> GetAllAsync()
         {
             return await _categoryDal.GetList();
         }

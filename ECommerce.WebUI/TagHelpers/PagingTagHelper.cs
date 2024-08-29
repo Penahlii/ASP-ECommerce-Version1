@@ -3,17 +3,26 @@ using System.Text;
 
 namespace ECommerce.WebUI.TagHelpers
 {
-	[HtmlTargetElement("product-list-pager")]
+	[HtmlTargetElement("list-pager")]
 	public class PagingTagHelper : TagHelper
 	{
 		[HtmlAttributeName("page-size")]
 		public int PageSize { get; set; }
+
 		[HtmlAttributeName("page-count")]
 		public int PageCount { get; set; }
+
 		[HtmlAttributeName("current-category")]
 		public int CurrentCategory { get; set; }
+
 		[HtmlAttributeName("current-page")]
 		public int CurrentPage { get; set; }
+
+		[HtmlAttributeName("asp-controller")]
+		public string Controller { get; set; }
+
+		[HtmlAttributeName("asp-action")]
+		public string Action { get; set; }
 
 		public override void Process(TagHelperContext context, TagHelperOutput output)
 		{
@@ -26,8 +35,8 @@ namespace ECommerce.WebUI.TagHelpers
 
 				var prevDisabled = (CurrentPage == 1) ? "disabled" : "";
 				sb.AppendFormat("<li class='page-item {0} me-2'>", prevDisabled);
-				sb.AppendFormat("<a class='page-link' href='/product/index?page={0}&category={1}' tabindex='-1'>Previous</a>",
-					CurrentPage - 1, CurrentCategory);
+				sb.AppendFormat("<a class='page-link' href='/{0}/{1}?page={2}&category={3}' tabindex='-1'>Previous</a>",
+					Controller, Action, CurrentPage - 1, CurrentCategory);
 				sb.Append("</li>");
 
 				sb.AppendFormat("<li class='page-item active me-2'>");
@@ -36,8 +45,8 @@ namespace ECommerce.WebUI.TagHelpers
 
 				var nextDisabled = (CurrentPage == PageCount) ? "disabled" : "";
 				sb.AppendFormat("<li class='page-item {0} me-2'>", nextDisabled);
-				sb.AppendFormat("<a class='page-link' href='/product/index?page={0}&category={1}'>Next</a>",
-					CurrentPage + 1, CurrentCategory);
+				sb.AppendFormat("<a class='page-link' href='/{0}/{1}?page={2}&category={3}'>Next</a>",
+					Controller, Action, CurrentPage + 1, CurrentCategory);
 				sb.Append("</li>");
 
 				sb.Append("</ul>");

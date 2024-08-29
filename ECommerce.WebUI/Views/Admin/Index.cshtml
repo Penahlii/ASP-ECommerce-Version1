@@ -1,0 +1,93 @@
+﻿@model CombinedAdminViewModel
+
+@{
+	Layout = "_AdminLayout";
+}
+
+@if (Model.ProductListViewModel.Products == null || Model.ProductListViewModel.Products.Count == 0)
+{
+	<span class="alert alert-info">No Product Exist</span>
+}
+else
+{
+	<div class="container mt-4">
+		<div class="row">
+			<div class="col-md-6">
+				<div class="list-group">
+					<a href="/admin/index?category=@Model.ProductListViewModel.CurrentCategory&filterName=a-z&filterPrice=@Model.ProductListViewModel.FilterByPrice" class="list-group-item list-group-item-action">
+						A-Z
+					</a>
+					<a href="/admin/index?category=@Model.ProductListViewModel.CurrentCategory&filterName=z-a&filterPrice=@Model.ProductListViewModel.FilterByPrice" class="list-group-item list-group-item-action">
+						Z-A
+					</a>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="list-group">
+					<a href="/admin/index?category=@Model.ProductListViewModel.CurrentCategory&filterName=@Model.ProductListViewModel.FilterByName&filterPrice=lower" class="list-group-item list-group-item-action">
+						First Lower
+					</a>
+					<a href="/admin/index?category=@Model.ProductListViewModel.CurrentCategory&filterName=@Model.ProductListViewModel.FilterByName&filterPrice=higher" class="list-group-item list-group-item-action">
+						First Higher
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<form asp-controller="Admin" asp-action="AddCategory" method="post" role="form" class="form-horizontal mt-4">
+		<div class="input-group mb-3">
+			<input asp-for="@Model.AddCategoryViewModel.CategoryName" class="form-control" placeholder="Add New Category" />
+			<button type="submit" class="btn btn-primary">Add</button>
+		</div>
+		<span asp-validation-for="@Model.AddCategoryViewModel.CategoryName" class="text-danger"></span>
+	</form>
+
+
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Product Name</th>
+				<th>Unit Price</th>
+				<th>UnitsInStock</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var item in Model.ProductListViewModel.Products)
+			{
+				var style = "";
+				@if (item.UnitsInStock == 0)
+				{
+					style = "background-color:rgba(255,0,0,0.5);";
+				}
+				<tr style="@style">
+					<td>
+						@item.ProductName
+					</td>
+					<td>
+						@item.UnitPrice
+					</td>
+					<td>
+						@item.UnitsInStock
+					</td>
+					<td>
+						<a class="btn btn-xs btn-success"
+						   href="/Admin/DeleteProduct?productId=@item.ProductId">Delete Product</a>
+					</td>
+
+				</tr>
+			}
+		</tbody>
+	</table>
+	<list-pager current-category="@Model.ProductListViewModel.CurrentCategory"
+						current-page="@Model.ProductListViewModel.CurrentPage"
+						page-count="@Model.ProductListViewModel.PageCount"
+						asp-controller="admin"
+						asp-action="index"
+						page-size="@Model.ProductListViewModel.PageSize"></list-pager>
+	<div class="d-flex justify-content-end mt-3">
+		<a href="/admin/addproduct" class="btn btn-success">Add New Product</a>
+	</div>
+
+}

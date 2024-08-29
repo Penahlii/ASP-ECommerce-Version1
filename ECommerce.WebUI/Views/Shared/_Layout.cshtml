@@ -37,6 +37,14 @@
                             </a>
                             @await Component.InvokeAsync("CartSummary")
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" @* href="@Url.Action("Register", "Account")" *@>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
+                                    <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM5.216 14A5.253 5.253 0 0 1 8 13c1.178 0 2.266.402 3.216 1H5.216zM1 13s1-4 7-4 7 4 7 4H1z" />
+                                </svg>
+                                Account
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -45,7 +53,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-2">
-                @await Component.InvokeAsync("CategoryList")
+                @await Component.InvokeAsync("CategoryList", new { currentController = "product", showDeleteButtons = false })
             </div>
             <main role="main" class="pb-3 col-md-10">
                 @if (TempData["message"] != null)
@@ -57,9 +65,6 @@
         </div>
     </div>
     <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2023 - ECommerce.WebUI - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

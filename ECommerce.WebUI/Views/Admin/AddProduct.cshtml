@@ -1,0 +1,53 @@
+﻿@model AddProductViewModel
+
+@{
+    ViewBag.Title = "Add Product";
+}
+
+<h2>Add Product</h2>
+
+<form asp-action="AddProduct" method="post" class="form-horizontal">
+    <div class="form-group">
+        <label asp-for="ProductName" class="control-label col-md-2"></label>
+        <div class="col-md-10">
+            <input asp-for="ProductName" class="form-control" />
+            <span asp-validation-for="ProductName" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="CategoryId" class="control-label col-md-2">Category</label>
+        <div class="col-md-10">
+            <select asp-for="CategoryId" class="form-control" asp-items="Model.Categories"></select>
+            <span asp-validation-for="CategoryId" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="UnitPrice" class="control-label col-md-2">Price</label>
+        <div class="col-md-10">
+            <input asp-for="UnitPrice" class="form-control" />
+            <span asp-validation-for="UnitPrice" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="UnitsInStock" class="control-label col-md-2">Stock</label>
+        <div class="col-md-10">
+            <input asp-for="UnitsInStock" class="form-control" />
+            <span asp-validation-for="UnitsInStock" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <button type="submit" class="btn btn-primary">Add Product</button>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

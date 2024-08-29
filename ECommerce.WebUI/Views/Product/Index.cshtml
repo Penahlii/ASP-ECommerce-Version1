@@ -70,8 +70,10 @@ else
 			}
 		</tbody>
 	</table>
-	<product-list-pager current-category="@Model.CurrentCategory"
+	<list-pager current-category="@Model.CurrentCategory"
 						current-page="@Model.CurrentPage"
 						page-count="@Model.PageCount"
-						page-size="@Model.PageSize"></product-list-pager>
+						asp-controller="product"
+						asp-action="index"
+						page-size="@Model.PageSize"></list-pager>
 }

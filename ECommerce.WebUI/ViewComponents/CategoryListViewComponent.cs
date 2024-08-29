@@ -15,7 +15,7 @@ namespace ECommerce.WebUI.ViewComponents
             _categoryService = categoryService;
         }
 
-        public ViewViewComponentResult Invoke()
+        public ViewViewComponentResult Invoke(string currentController, bool showDeleteButtons = false)
         {
             var allCategory = new Category()
             {
@@ -28,8 +28,10 @@ namespace ECommerce.WebUI.ViewComponents
             var category=int.TryParse(param, out var categoryId);
             var model = new CategoryListViewModel
             {
-                Categories=categories,
-                CurrentCategory=category ? categoryId : allCategory.CategoryId,
+                Categories = categories,
+                CurrentCategory = category ? categoryId : allCategory.CategoryId,
+                ShowDeleteButtons = showDeleteButtons,
+                CurrentController = currentController
             };
             return View(model);
         }
