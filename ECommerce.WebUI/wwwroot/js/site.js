@@ -1,4 +1,18 @@
-﻿// Please see documentation at https://learn.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
+﻿$(document).ready(function () {
+    $("#searchInput").on("keyup", function () {
+        var query = $(this).val();
+        var category = $("#currentCategory").val();
 
-// Write your JavaScript code.
+        $.ajax({
+            url: '/Product/SearchProducts',
+            type: 'GET',
+            data: { query: query, category: category },
+            success: function (data) {
+                $("#productList").html(data);
+            },
+            error: function () {
+                alert("An error occurred while searching products.");
+            }
+        });
+    });
+});

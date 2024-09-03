@@ -31,49 +31,29 @@ else
 		</div>
 	</div>
 
-	<table class="table">
-		<thead>
-			<tr>
-				<th>Product Name</th>
-				<th>Unit Price</th>
-				<th>UnitsInStock</th>
-				<th></th>
-			</tr>
-		</thead>
-		<tbody>
-			@foreach (var item in Model.Products)
-			{
-				var style = "";
-				@if (item.UnitsInStock == 0)
-				{
-					style = "background-color:rgba(255,0,0,0.5);";
-				}
-				<tr style="@style">
-					<td>
-						@item.ProductName
-					</td>
-					<td>
-						@item.UnitPrice
-					</td>
-					<td>
-						@item.UnitsInStock
-					</td>
-					@if (style == "")
-					{
-						<td>
-							<a class="btn btn-xs btn-success"
-							   href="/Cart/AddToCart?productId=@item.ProductId&page=@Model.CurrentPage&category=@Model.CurrentCategory">Add To Cart</a>
-						</td>
-					}
+	<div class="container mt-4">
+		<input type="text" id="searchInput" class="form-control" placeholder="Search products..." />
+		<input type="hidden" id="currentCategory" value="@Model.CurrentCategory" />
 
+		<table class="table">
+			<thead>
+				<tr>
+					<th>Product Name</th>
+					<th>Unit Price</th>
+					<th>UnitsInStock</th>
+					<th></th>
 				</tr>
-			}
-		</tbody>
-	</table>
-	<list-pager current-category="@Model.CurrentCategory"
-						current-page="@Model.CurrentPage"
-						page-count="@Model.PageCount"
-						asp-controller="product"
-						asp-action="index"
-						page-size="@Model.PageSize"></list-pager>
+			</thead>
+			<tbody id="productList">
+				@Html.Partial("_ProductListPartial", Model.Products)
+			</tbody>
+		</table>
+
+		<list-pager current-category="@Model.CurrentCategory"
+					current-page="@Model.CurrentPage"
+					page-count="@Model.PageCount"
+					asp-controller="product"
+					asp-action="index"
+					page-size="@Model.PageSize"></list-pager>
+	</div>
 }

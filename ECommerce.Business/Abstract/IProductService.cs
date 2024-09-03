@@ -15,5 +15,6 @@ namespace ECommerce.Business.Abstract
         Task UpdateAsync(Product product);
         Task DeleteAsync(int id);
         Task<Product> GetByIdAsync(int id);
+        public Task<IEnumerable<Product>> SearchProductsAsync(string query, int category); // this is added for Input search With AJAX
     }
 }

@@ -1,0 +1,21 @@
+﻿@using ECommerce.Entities.Models
+@model IEnumerable<Product>
+
+<tbody>
+    @foreach (var item in Model)
+    {
+        var style = item.UnitsInStock == 0 ? "background-color:rgba(255,0,0,0.5);" : "";
+        <tr style="@style">
+            <td>@item.ProductName</td>
+            <td>@item.UnitPrice</td>
+            <td>@item.UnitsInStock</td>
+            @if (item.UnitsInStock > 0)
+            {
+                <td>
+                    <a class="btn btn-xs btn-success"
+                       href="/Cart/AddToCart?productId=@item.ProductId">Add To Cart</a>
+                </td>
+            }
+        </tr>
+    }
+</tbody>

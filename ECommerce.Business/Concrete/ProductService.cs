@@ -48,5 +48,16 @@ namespace ECommerce.Business.Concrete
         {
             await _productDal.Update(product);
         }
+
+        public async Task<IEnumerable<Product>> SearchProductsAsync(string query, int category)
+        {
+            var products = await GetAllByCategoryAsync(category);
+            if (!string.IsNullOrEmpty(query))
+            {
+                products = products.Where(p => p.ProductName.Contains(query, StringComparison.OrdinalIgnoreCase)).ToList();
+            }
+            return products;
+        }
+
     }
 }

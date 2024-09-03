@@ -11,7 +11,7 @@ namespace ECommerce.WebUI.Controllers
 		private readonly IProductService _productService;
 
 		public ProductController(IProductService productService)
-		{
+		{ 
 			_productService = productService;
 		}
 
@@ -50,6 +50,15 @@ namespace ECommerce.WebUI.Controllers
 
 			return View(model);
 		}
+
+
+		[HttpGet]
+		public async Task<IActionResult> SearchProducts(string query, int category = 0)
+		{
+			var items = await _productService.SearchProductsAsync(query, category);
+			return PartialView("_ProductListPartial", items);
+		}
+
 
 		// GET: ProductController/Details/5
 		public ActionResult Details(int id)
